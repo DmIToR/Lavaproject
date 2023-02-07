@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+
+<ul class="list-articles">
+
+	{% for p in posts %}
+		<li><div class="article-panel">
+			<p class="last">Дата создания: {{ p.date_start|date:"d-m-Y"}}</p>
+		</div>
+
+			<h2>{{p.name}}</h2>
+            {% autoescape on %}
+            {{p.description|linebreaks|truncatewords:10}}
+			{{p.responsible}}
+			{{p.role}}
+            {% endautoescape %}
+			</li>
+	{% endfor %}
+</ul>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+	{% for p in box %}
+		<div class="article-panel">
+			<p class="last"></p>
+		</div>
+			<h2>{{p.name}}</h2>
+            {% for u in p.tasks.all %}
+            <li>{{u}}</li>
+            {% endfor %}
+            <a href="{% url 'debox' idd=p.id %}">Удалить бокс</a>
+            <form action="{% url 'crebox' %}" method="get">
+                <input type="text" name="nam">
+                
+                <button type="submit">Создать бокс</button>
+            </form>
+			<div class="clear"></div>
+	{% endfor %}
+</body>
+</html>

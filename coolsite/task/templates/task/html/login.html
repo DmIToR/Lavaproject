@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <link rel="stylesheet" href="../css/losi.css">
+
+  <title>Login</title>
+</head>
+
+<body>
+
+  <div class="auth-container">
+    <div class="auth-box">
+      <div class="auth-header">
+        <h2>Login</h2>
+      </div>
+      <form method="post">
+        {% csrf_token %}
+        <div class="auth-form-group">
+         {{ form.as_p}}
+          <div class="auth-form-group">
+          <input type="submit" value="Login">
+        </div>
+        </div>
+      </form>
+      <p>Регистрация <a href="{% url 'register' %}">Register here</a></p>
+    </div>
+  </div>
+
+</body>
+
+</html>

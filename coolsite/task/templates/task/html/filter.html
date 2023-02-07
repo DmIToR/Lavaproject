@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+	{% for p in posts %}
+		<li><div class="article-panel">
+			<p class="last">Дата создания: {{ p.date_start|date:"d-m-Y"}}</p>
+		</div>
+
+			<h2>{{p.name}}</h2>
+            {% autoescape on %}
+            {{ p.description|linebreaks|truncatewords:10 }}
+			{{ p.responsible }}
+			{{ p.role }}
+            {% endautoescape %}
+			<div class="clear"></div>
+			<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>
+			</li>
+	{% endfor %}
+</body>
+</html>

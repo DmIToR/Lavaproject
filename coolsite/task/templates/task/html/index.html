@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>{{ title }}</title>
+</head>
+<body>
+
+<form action="{% url 'filter' %}" method="get">
+	<h3>Роль</h3>
+	{% for rols in view.get_role %}
+	<li>
+		<input type="checkbox" name="role" class="role_class" value="{{ rols.id }}">
+		<span>{{ rols.role_name }}</span>
+	</li>
+	{% endfor %}
+
+	<h3>Пользователи</h3>
+	{% for user in view.get_user %}
+	<li>
+		<input type="checkbox" name="user" value="{{ user.id }}">
+		<span>{{ user.username }}</span>
+	</li>
+	{% endfor %}
+
+	<button type="submit">Найти</button>
+</form>
+
+<ul class="list-articles">
+	{% if request.user.is_authenticated %}
+	{{user.username}} | <a href="{% url 'logout' %}">Выйти</a><br><br>
+	<a href="{% url 'box' %}?user={{user.id}}">Боксы</a>
+	{% else %}
+	<a href="{% url 'register'%}">Регистрация</a>
+	{% endif %}
+	<a href="{% url 'addtask'%}">Добавить задачу</a>
+	
+	{% for p in posts %}
+		<li><div class="article-panel">
+			<p class="last">Дата создания: {{ p.date_start|date:"d-m-Y"}}</p>
+		</div>
+
+			<h2>{{p.name}}</h2>
+            {% autoescape on %}
+            {{p.description|linebreaks|truncatewords:10}}
+			{{p.responsible}}
+			{{p.role}}
+            {% endautoescape %}
+			<div class="clear"></div>
+			<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>
+			</li>
+	{% endfor %}
+</ul>
+</body>
+</html>
