@@ -15,6 +15,8 @@ class AddUserForm(UserCreationForm):
         fields = ('username', 'email', 'password1', 'password2') # показывает какие поля берем из модели
 
 class AddTaskForm(forms.ModelForm):
+
+
     class Meta:
         model = Task
-        fields = '__all__'
+        fields = ('name', 'desk', 'date_duration', 'date_end')

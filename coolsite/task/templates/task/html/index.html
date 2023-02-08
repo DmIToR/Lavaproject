@@ -10,7 +10,7 @@
 	<h3>Роль</h3>
 	{% for rols in view.get_role %}
 	<li>
-		<input type="checkbox" name="role" class="role_class" value="{{ rols.id }}">
+		<input type="checkbox" name="role" class="role_class" value="{{ rols.id }}"> Пользователь не связан с ролями
 		<span>{{ rols.role_name }}</span>
 	</li>
 	{% endfor %}

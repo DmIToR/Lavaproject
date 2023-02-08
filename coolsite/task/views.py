@@ -18,7 +18,7 @@ class rols:
         return User.objects.all()
 
 class RegisterUser(CreateView):
-    form_class = AddTaskForm
+    form_class = AddUserForm
     template_name = 'task/html/signup.html'
     success_url = reverse_lazy('home')
 
