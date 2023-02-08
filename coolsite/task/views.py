@@ -16,9 +16,12 @@ class rols:
 
     def get_user(self):
         return User.objects.all()
+    
+    def get_tasks(self):
+        return Task.objects.all()
 
 class RegisterUser(CreateView):
-    form_class = AddTaskForm
+    form_class = AddUserForm
     template_name = 'task/html/signup.html'
     success_url = reverse_lazy('home')
 
@@ -77,15 +80,24 @@ class Boxing(rols, ListView):
             users__in=self.request.GET.getlist("user")
         )
         return queryset
+     
     
 
+def updatebox(request, boxid): # добавление задач в бокс
+    for i in request.GET.getlist("tasking"):
+        Box.objects.get(id=boxid).tasks.add(i)
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-def debox(request, idd):
-    Box.objects.filter(id=idd).delete()
+def debox(request, boxid): # удаление бокса
+    Box.objects.filter(id=boxid).delete()
+    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+
+def detask(request, boxid, taskid): # удаление задачи из бокса
+    Box.objects.get(id=boxid).tasks.remove(taskid)
     return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
 
-def crebox(request,nam, userid):
-    b = Box.objects.create(name=nam)
-    b.users.add(userid)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
+class AddBoxes(CreateView): # создание бокса
+    form_class = AddBoxForm
+    template_name = 'task/html/addbox.html'
+    success_url = reverse_lazy('home')

@@ -1,4 +1,4 @@
-from django.db import models
+﻿from django.db import models
 from django.urls import reverse
 from django.contrib.auth.models import User
 
@@ -20,6 +20,7 @@ class Task(models.Model):
     role = models.ForeignKey('Role', on_delete=models.PROTECT, blank=True) # ответственный
     responsible = models.ForeignKey(User, on_delete=models.PROTECT, blank=True) # ответственный
 
+    
     def __str__(self):  
         return self.name
 

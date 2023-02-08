@@ -6,20 +6,37 @@
 </head>
 <body>
 	{% for p in box %}
-		<div class="article-panel">
-			<p class="last"></p>
-		</div>
+		<div style="border: double black; width: 50%; margin: 20px;" class="article-panel">
+			
+		
 			<h2>{{p.name}}</h2>
-            {% for u in p.tasks.all %}
-            <li>{{u}}</li>
+            <p>Участники:</p>
+            {% for parts in p.users.all %}
+                <li>{{parts}}</li>
             {% endfor %}
-            <a href="{% url 'debox' idd=p.id %}">Удалить бокс</a>
-            <form action="{% url 'crebox' %}" method="get">
-                <input type="text" name="nam">
-                
-                <button type="submit">Создать бокс</button>
-            </form>
-			<div class="clear"></div>
+            <br><br><br>
+            {% for u in p.tasks.all %}
+            <li>{{u}}</li> <a href="{% url 'detask' boxid=p.pk taskid=u.pk %}">Удалить задачу</a><br>
+            {% endfor %}
+            <br>
+            <form action="{% url 'cretbox' boxid=p.pk %}" method="get">
+            {% for task in view.get_tasks %}
+            <li>
+                <input type="checkbox" name="tasking" class="role_class" value="{{ task.id }}">
+                <span>{{ task.name }}</span>
+            </li>
+            {% endfor %}
+
+            <button type="submit">Добавить задачи</a>
+        </form>
+            <br>
+            <br>
+            
+            <a href="{% url 'debox' boxid=p.id %}">Удалить бокс</a>
+            
+			<div class="clear"></div></div>
 	{% endfor %}
+    <br><br>
+    <a href="{% url 'crebox' %}">Создать бокс</a>
 </body>
 </html>

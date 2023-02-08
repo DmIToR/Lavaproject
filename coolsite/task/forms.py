@@ -18,3 +18,8 @@ class AddTaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = '__all__'
+
+class AddBoxForm(forms.ModelForm):
+    class Meta:
+        model = Box
+        fields = '__all__'
