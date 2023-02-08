@@ -11,7 +11,7 @@
 	{% for rols in view.get_role %}
 	<li>
 		<input type="checkbox" name="role" class="role_class" value="{{ rols.id }}">
-		<span>{{ rols.role_name }}</span>
+		<span>{{ rols.name_role }}</span>
 	</li>
 	{% endfor %}
 

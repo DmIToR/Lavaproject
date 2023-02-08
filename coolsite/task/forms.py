@@ -14,6 +14,7 @@ class AddUserForm(UserCreationForm):
         model = User # Связь формы с моделью
         fields = ('username', 'email', 'password1', 'password2') # показывает какие поля берем из модели
 
+
 class AddTaskForm(forms.ModelForm):
     class Meta:
         model = Task
@@ -23,3 +24,4 @@ class AddBoxForm(forms.ModelForm):
     class Meta:
         model = Box
         fields = '__all__'
+# 32 строчка index 	<!--<a href="{% url 'box' %}?user={{user.id}}">Боксы</a>--> почему-то с ним не работает
