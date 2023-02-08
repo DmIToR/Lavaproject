@@ -19,11 +19,13 @@ class AddUserForm(UserCreationForm):
 class AddTaskForm(forms.ModelForm):
     name = forms.CharField(label='Название задачи:', widget=forms.TextInput())
     desk = forms.CharField(label='Описание задачи:', widget=forms.Textarea())
-    date_start = forms.DateField(label='Дата начала:')
+    date_start = forms.DateField(label='Дата начала:', initial = timezone.now().date())
     date_duration = forms.IntegerField(label='Продолжительность:')
-    date_end = forms.DateField(label = 'Дата окончания:')
-    responsible_id = AuthUser.objects.all()
-    print(responsible_id)
+    date_end = forms.DateField(label = 'Дата окончания:', initial = timezone.now().date())
+
+
+    user_choices = [(user.id, user.username) for user in AuthUser.objects.all()]
+    selected_user = forms.MultipleChoiceField(choices=user_choices, label = "Ответственный")
 
     class Meta:
         model = Task

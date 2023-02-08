@@ -44,6 +44,16 @@ class AddTask(CreateView):
     template_name = 'task/html/addtask.html'
     success_url = reverse_lazy('home')
 
+    def form_valid(self, form):
+        task = form.save(commit=False)
+        task.user = self.request.user
+        task.save()
+        form.save_m2m()
+        
+        for user_id in form.cleaned_data['selected_user'][0]:
+            user = AuthUser.objects.get(id=user_id)
+            User2Task.objects.create(id_task=task.id_task, id_user=user.id)
+        return HttpResponseRedirect(self.success_url)
 
 class TaskHome(rols, ListView):
     # paginate_by = 3
