@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import *
 from django.contrib.auth.models import User
 
+
 class AddUserForm(UserCreationForm):
     username = forms.CharField(label='Логин', widget=forms.TextInput())
     email = forms.EmailField(label="email", widget=forms.EmailInput())
@@ -16,9 +17,17 @@ class AddUserForm(UserCreationForm):
 
 
 class AddTaskForm(forms.ModelForm):
+    name = forms.CharField(label='Название задачи:', widget=forms.TextInput())
+    desk = forms.CharField(label='Описание задачи:', widget=forms.Textarea())
+    date_start = forms.DateField(label='Дата начала:')
+    date_duration = forms.IntegerField(label='Продолжительность:')
+    date_end = forms.DateField(label = 'Дата окончания:')
+    responsible_id = AuthUser.objects.all()
+    print(responsible_id)
+
     class Meta:
         model = Task
-        fields = '__all__'
+        fields = ('id_task','name', 'desk', 'date_start', 'date_duration', 'date_end')
 
 class AddBoxForm(forms.ModelForm):
     class Meta:
