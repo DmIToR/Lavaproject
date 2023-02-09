@@ -7,12 +7,13 @@
 <body>
 	{% for p in posts %}
 		<li><div class="article-panel">
-			<p class="last">Дата создания: {{ p.date_start|date:"d-m-Y"}}</p>
+			<hr>
+			<p class="last">Дата создания: {{ p.id_task.date_start|date:"d-m-Y"}}</p>
 		</div>
 
-			<h2>{{p.name}}</h2>
+			<h2>{{p.id_task}}</h2>
             {% autoescape on %}
-            {{ p.desk|linebreaks|truncatewords:10 }}
+            {{ p.id_task.desk|linebreaks|truncatewords:10 }}
 
             {% endautoescape %}
 			<div class="clear"></div>

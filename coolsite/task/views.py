@@ -19,6 +19,10 @@ class rols:
     
     def get_tasks(self):
         return Task.objects.all()
+    
+    def get_User2Task(self):
+        return User2Task.objects.all()   
+
 
 class RegisterUser(CreateView):
     form_class = AddUserForm
@@ -39,21 +43,18 @@ class LoginUser(LoginView):
     def get_success_url(self):
         return reverse_lazy('home')
 
+
 class AddTask(CreateView):
     form_class = AddTaskForm
     template_name = 'task/html/addtask.html'
     success_url = reverse_lazy('home')
 
-    def form_valid(self, form):
-        task = form.save(commit=False)
-        task.user = self.request.user
-        task.save()
-        form.save_m2m()
-        
-        for user_id in form.cleaned_data['selected_user'][0]:
-            user = AuthUser.objects.get(id=user_id)
-            User2Task.objects.create(id_task=task.id_task, id_user=user.id)
-        return HttpResponseRedirect(self.success_url)
+
+class delegate(CreateView):
+    form_class = delegateTaskForm
+    template_name = 'task/html/delegate.html'
+    success_url = reverse_lazy('home')
+
 
 class TaskHome(rols, ListView):
     # paginate_by = 3
@@ -76,8 +77,8 @@ class FilterTask(rols, ListView):
     template_name = 'task/html/filter.html' # явное указание пути
     context_object_name = 'posts'
     def get_queryset(self):
-        queryset = Task.objects.filter(
-            role__in=self.request.GET.getlist("role"), responsible__in=self.request.GET.getlist("user"))
+        queryset = User2Task.objects.filter(
+            id_role__in=self.request.GET.getlist("role"), id_user__in=self.request.GET.getlist("user"))
         return queryset
     
 

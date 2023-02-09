@@ -18,13 +18,16 @@ class AddUserForm(UserCreationForm):
 
 class AddTaskForm(forms.ModelForm):
 
-
     class Meta:
         model = Task
-        fields = ('id_task','name', 'desk', 'date_start', 'date_duration', 'date_end')
+        fields = '__all__'
 
 class AddBoxForm(forms.ModelForm):
     class Meta:
         model = Box
         fields = '__all__'
-# 32 строчка index 	<!--<a href="{% url 'box' %}?user={{user.id}}">Боксы</a>--> почему-то с ним не работает
+
+class delegateTaskForm(forms.ModelForm):
+    class Meta:
+        model = User2Task
+        fields = '__all__'

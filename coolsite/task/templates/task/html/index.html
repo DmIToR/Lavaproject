@@ -10,7 +10,7 @@
 	<h3>Роль</h3>
 	{% for rols in view.get_role %}
 	<li>
-		<input type="checkbox" name="role" class="role_class" value="{{ rols.id }}">
+		<input type="checkbox" name="role" value="{{ rols.id_role }}">
 		<span>{{ rols.name_role }}</span>
 	</li>
 	{% endfor %}
@@ -34,17 +34,16 @@
 	<a href="{% url 'register'%}">Регистрация</a>
 	{% endif %}
 	<a href="{% url 'addtask'%}">Добавить задачу</a>
+	<a href="{% url 'delegate'%}">Делигировать задачу</a>
 	
 	{% for p in posts %}
+	<hr>
 		<li><div class="article-panel">
 			<p class="last">Дата создания: {{ p.date_start|date:"d-m-Y"}}</p>
 		</div>
-
 			<h2>{{p.name}}</h2>
             {% autoescape on %}
-            {{p.description|linebreaks|truncatewords:10}}
-			{{p.responsible}}
-			{{p.role}}
+            {{p.desk|linebreaks|truncatewords:10}}
             {% endautoescape %}
 			<div class="clear"></div>
 			<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>

@@ -4,7 +4,7 @@
 
 <head>
   <link rel="stylesheet" type="text/css" href="{% static '../css/losi.css' %}">
-  <title>Add task</title>
+  <title>delegate</title>
 </head>
 
 <body>
@@ -12,14 +12,23 @@
   <div class="auth-container">
     <div class="auth-box">
       <div class="auth-header">
-        <h2>Add task</h2>
+        <h2>delegate</h2>
       </div>
       <form method="post">
         {% csrf_token %}
         <div class="auth-form-group">
          {{ form.as_p }}
           <div class="auth-form-group">
-          <input type="submit" value="Add task">
+          <input type="submit" value="delegate">
+        </div>
+       </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+
+</html>">
         </div>
        </div>
       </form>

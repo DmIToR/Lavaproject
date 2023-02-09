@@ -8,6 +8,7 @@ urlpatterns = [
     path('logout/', LogoutUser, name='logout'),
     path('filter/', FilterTask.as_view(), name='filter'),
     path('addtask/', AddTask.as_view(), name='addtask'),
+    path('delegate/', delegate.as_view(), name='delegate'),
     path('box/', Boxing.as_view(), name='box'),
     path('box/delete/<int:boxid>/', debox, name='debox'),
     path('box/detask/<int:boxid>/<int:taskid>/', detask, name='detask'),

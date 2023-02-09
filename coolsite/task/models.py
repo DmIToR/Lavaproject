@@ -94,7 +94,10 @@ class User2Project(models.Model):
         db_table = 'user2project'
 
 
-class User2Task(models.Model):
+class User2Task(models.Model): # Делигирование задач, при создании задач роль автоматом должна быть = Создатель задач,
+# а пользователь = тот за кого зареган, при делегирование нужно назначить на задачу пользователя и его роль
+
+    id_user2task = models.AutoField(primary_key=True, db_column='id_user2task')
     id_user = models.ForeignKey(User, models.DO_NOTHING, db_column='id_user')
     id_task = models.ForeignKey(Task, models.DO_NOTHING, db_column='id_task')
     id_role = models.ForeignKey(Role, models.DO_NOTHING, db_column='id_role')
@@ -102,6 +105,9 @@ class User2Task(models.Model):
     class Meta:
         managed = False
         db_table = 'user2task'
+
+    def __str__(self):  
+        return (f"{self.id_user} - {self.id_task} - {self.id_role}")
 
 
 class Users(models.Model):
@@ -121,3 +127,7 @@ class Box(models.Model): # kanban доска
 
     def __str__(self):
         return self.name
+
+class delegate(models.Model): 
+    id_task = models.ForeignKey(Task, models.DO_NOTHING, db_column='id_task')
+    id_role = models.ForeignKey(Role, models.DO_NOTHING, db_column='id_role')
