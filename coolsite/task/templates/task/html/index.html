@@ -46,7 +46,7 @@
             {{p.desk|linebreaks|truncatewords:10}}
             {% endautoescape %}
 			<div class="clear"></div>
-			<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>
+			<p class="link-read-post"><a href="{% url 'task_page' p.pk %}">Подробнее</a></p>
 			</li>
 	{% endfor %}
 </ul>

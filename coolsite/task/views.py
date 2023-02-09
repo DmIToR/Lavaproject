@@ -4,7 +4,8 @@ from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, DetailView, CreateView
+
 
 from .forms import *
 from .models import *
@@ -44,9 +45,11 @@ class LoginUser(LoginView):
         return reverse_lazy('home')
 
 
-class AddTask(CreateView):
+class AddTask(rols, CreateView):
     form_class = AddTaskForm
     template_name = 'task/html/addtask.html'
+    #User2Task(id_user = rol, id_role = id_user, id_task = 6).save() # создаст запись в таблице Dealer
+    #User2Task.objects.tasks.add(i)
     success_url = reverse_lazy('home')
 
 
@@ -81,6 +84,10 @@ class FilterTask(rols, ListView):
             id_role__in=self.request.GET.getlist("role"), id_user__in=self.request.GET.getlist("user"))
         return queryset
     
+
+def show_task(request, task_id): # подробное описание задачи
+    return HttpResponse(f"{task_id}")
+
 
 
 class Boxing(rols, ListView):

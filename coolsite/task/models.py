@@ -75,6 +75,7 @@ class Task(models.Model):
         return self.name
 
 
+
 class Task2Task(models.Model):
     id_task = models.ForeignKey(Task, models.DO_NOTHING, db_column='id_task')
     id_subtask = models.IntegerField()
@@ -103,7 +104,7 @@ class User2Task(models.Model): # Делигирование задач, при �
     id_role = models.ForeignKey(Role, models.DO_NOTHING, db_column='id_role')
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'user2task'
 
     def __str__(self):  

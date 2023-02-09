@@ -9,22 +9,31 @@
 
 <body>
 
-  <div class="auth-container">
-    <div class="auth-box">
-      <div class="auth-header">
-        <h2>Add task</h2>
-      </div>
-      <form method="post">
-        {% csrf_token %}
-        <div class="auth-form-group">
-         {{ form.as_p }}
-          <div class="auth-form-group">
-          <input type="submit" value="Add task">
-        </div>
-       </div>
-      </form>
-    </div>
-  </div>
+  <h2>Add task</h2>
+
+    <form method="post">
+        
+      {% csrf_token %}
+      
+      {{ form.as_p }}
+      <h3>Роль</h3>
+      {% for rols in view.get_role %}
+      <li>
+        <input type="checkbox" name="role" value="{{ rols.id_role }}">
+        <span>{{ rols.name_role }}</span>
+      </li>
+      {% endfor %}
+
+      <h3>Пользователь</h3>
+      {% for rols in view.get_user %}
+      <li>
+        <input type="checkbox" name="user" value="{{ rols.id_user }}">
+        <span>{{ rols.username }}</span>
+      </li>
+      {% endfor %}
+      
+      <input type="submit" value="Add task">
+    </form>
 
 </body>
 
