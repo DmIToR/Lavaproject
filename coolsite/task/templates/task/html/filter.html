@@ -12,9 +12,8 @@
 
 			<h2>{{p.name}}</h2>
             {% autoescape on %}
-            {{ p.description|linebreaks|truncatewords:10 }}
-			{{ p.responsible }}
-			{{ p.role }}
+            {{ p.desk|linebreaks|truncatewords:10 }}
+
             {% endautoescape %}
 			<div class="clear"></div>
 			<p class="link-read-post"><a href="{{ p.get_absolute_url }}">Подробнее</a></p>
