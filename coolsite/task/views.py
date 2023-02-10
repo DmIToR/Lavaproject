@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.views import LoginView
 from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login, logout
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView
@@ -9,7 +9,7 @@ from django.views.generic import ListView, DetailView, CreateView
 
 from .forms import *
 from .models import *
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, Http404
 
 class rols:
     def get_role(self):
@@ -52,14 +52,18 @@ class AddTask(rols, CreateView):
     #User2Task.objects.tasks.add(i)
     success_url = reverse_lazy('home')
 
+#def detask(request, task_id): # удаление задачи из бокса
+#    Task.objects.get(id=task_id).tasks.remove(task_id)
+#    return HttpResponseRedirect(request.META.get('HTTP_REFERER'))
 
-class delegate(CreateView):
+
+class delegate(CreateView): # Делегирование задач
     form_class = delegateTaskForm
     template_name = 'task/html/delegate.html'
     success_url = reverse_lazy('home')
 
 
-class TaskHome(rols, ListView):
+class TaskHome(rols, ListView): # Главная страница с задачами
     # paginate_by = 3
     model = Task # Ссылка на модель
     template_name = 'task/html/index.html' # явное указание пути
@@ -76,18 +80,33 @@ def LogoutUser(request):
     return redirect('login')
 
 
-class FilterTask(rols, ListView):
+class FilterTask(rols, ListView): # Страница с выводом отфильтрованных задач
     template_name = 'task/html/filter.html' # явное указание пути
     context_object_name = 'posts'
     def get_queryset(self):
         queryset = User2Task.objects.filter(
-            id_role__in=self.request.GET.getlist("role"), id_user__in=self.request.GET.getlist("user"))
+            id_role__in=self.request.GET.getlist("role"), id_user__in=self.request.GET.getlist("user")).distinct("id_task")
         return queryset
+    
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super().get_context_data(**kwargs) # сохранение предыдущего контекста
+        context['title'] = 'filter'
+        return context
     
 
 def show_task(request, task_id): # подробное описание задачи
-    return HttpResponse(f"{task_id}")
+    post = get_object_or_404(Task, pk=task_id)
+    users = User2Task.objects.filter(id_task=task_id)
 
+    context = {
+        'post': post,
+        'users': users,        
+        'title': post.name,
+    }
+
+    return render(request, "task/html/task_page.html", context=context)
+
+    
 
 
 class Boxing(rols, ListView):

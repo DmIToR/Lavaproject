@@ -1,24 +1,30 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<link type="text/css" rel="stylesheet" href="{% static 'task/css/task_page.css' %}">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ title }}</title>
 </head>
 <body>
-	{% for p in posts %}
-		<li><div class="article-panel">
-			<hr>
-			<p class="last">Дата создания: {{ p.id_task.date_start|date:"d-m-Y"}}</p>
+	<div class="box">
+		<h1>{{post.name}}</h1>
+		<hr>
+		<p>Описание: {{post.desk}}</p>
+		<p>Дата начала: {{post.date_start}}</p>
+		<p>Количество дней на выполнение: {{post.date_duration}}</p>
+		<p>Дата окончания: {{post.date_end}}</p>
+		<hr>
+		
+		{% if not users %}
+			<p>Ответсвенного нет </p>	
+
+		{% else %}
+			<p>Ответсвенный - Роль </p>
+			{% for user in users %}
+				<p>{{user.id_user}} - {{user.id_role}}</p>
+			{% endfor %}
+		{% endif %}
 		</div>
-
-			<h2>{{p.id_task}}</h2>
-            {% autoescape on %}
-            {{ p.id_task.desk|linebreaks|truncatewords:10 }}
-			{{ p.id_user.username|linebreaks|truncatewords:10 }}
-			{{ p.id_role.name_role|linebreaks|truncatewords:10 }}
-
-            {% endautoescape %}
-			</li>
-	{% endfor %}
 </body>
 </html>

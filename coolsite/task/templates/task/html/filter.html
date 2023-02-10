@@ -1,26 +1,27 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
+	<link type="text/css" rel="stylesheet" href="{% static 'task/css/filter.css' %}">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>{{ title }}</title>
 </head>
 <body>
+
 	{% for p in posts %}
-		<li><div class="article-panel">
-			<hr>
-			<p class="last">Дата создания: {{ p.id_task.date_start|date:"d-m-Y"}}</p>
-		</div>
+		<div class="box">
+			<li>
+				<p class="last">Дата создания: {{ p.id_task.date_start|date:"d-m-Y"}}</p>
 
-			<h2>{{p.id_task}}</h2>
-            {% autoescape on %}
-            {{ p.id_task.desk|linebreaks|truncatewords:10 }}
-			{{ p.id_user.username|linebreaks|truncatewords:10 }}
-			{{ p.id_role.name_role|linebreaks|truncatewords:10 }}
+				<h2>{{p.id_task}}</h2>
+				{% autoescape on %}
+				{{ p.id_task.desk|linebreaks|truncatewords:10 }}
 
-            {% endautoescape %}
-			<div class="clear"></div>
-			<p class="link-read-post"><a href="{% url 'task_page' p.pk %}">Подробнее</a></p>
+				{% endautoescape %}
+				<div class="clear"></div>
+				<p class="link-read-post"><a href="{% url 'task_page' p.id_task.id_task %}">Подробнее</a></p>
 			</li>
+		</div>
 	{% endfor %}
 </body>
 </html>

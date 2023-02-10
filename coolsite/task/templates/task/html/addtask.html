@@ -3,38 +3,38 @@
 <html>
 
 <head>
-  <link rel="stylesheet" type="text/css" href="{% static '../css/losi.css' %}">
+	<link type="text/css" rel="stylesheet" href="{% static 'task/css/addtask.css' %}">
   <title>Add task</title>
 </head>
 
 <body>
+  <div class="box">
+    <h2>Add task</h2>
 
-  <h2>Add task</h2>
-
-    <form method="post">
+      <form method="post">
+          
+        {% csrf_token %}
         
-      {% csrf_token %}
-      
-      {{ form.as_p }}
-      <h3>Роль</h3>
-      {% for rols in view.get_role %}
-      <li>
-        <input type="checkbox" name="role" value="{{ rols.id_role }}">
-        <span>{{ rols.name_role }}</span>
-      </li>
-      {% endfor %}
+        {{ form.as_p }}
+  <!--      <h3>Роль</h3>
+        {% for rols in view.get_role %}
+        <li>
+          <input type="checkbox" name="role" value="{{ rols.id_role }}">
+          <span>{{ rols.name_role }}</span>
+        </li>
+        {% endfor %}
 
-      <h3>Пользователь</h3>
-      {% for rols in view.get_user %}
-      <li>
-        <input type="checkbox" name="user" value="{{ rols.id_user }}">
-        <span>{{ rols.username }}</span>
-      </li>
-      {% endfor %}
-      
-      <input type="submit" value="Add task">
+        <h3>Пользователь</h3>
+        {% for rols in view.get_user %}
+        <li>
+          <input type="checkbox" name="user" value="{{ rols.id_user }}">
+          <span>{{ rols.username }}</span>
+        </li>
+        {% endfor %}-->
+        
+        <input type="submit" value="Add task">
     </form>
-
+</div>
 </body>
 
 </html>
